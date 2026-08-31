@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="108dp"
-    android:height="108dp"
-    android:viewportWidth="108"
-    android:viewportHeight="108">
-    <group android:translateX="14" android:translateY="14">
-        <path android:fillColor="#FF6A00" android:pathData="M40,0A40,40 0,0 1,80 40A40,40 0,0 1,40 80A40,40 0,0 1,0 40A40,40 0,0 1,40 0Z"/>
-        <path android:fillColor="#FFFFFF" android:pathData="M20,32h40v6h-40zM20,44h40v6h-40zM20,56h24v6h-24z"/>
-    </group>
-</vector>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- ده هيستخدم الصورة اللي رفعتها icon.png -->
+    <item
+        android:drawable="@drawable/icon"
+        android:gravity="center"
+        android:width="72dp"
+        android:height="72dp" />
+</layer-list>
