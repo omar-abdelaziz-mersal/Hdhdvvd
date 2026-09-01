@@ -1,69 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:layout_height="match_parent">
 
-    <com.google.android.material.appbar.MaterialToolbar
-    android:id="@+id/topToolbar"
-    android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
-    android:background="@android:color/transparent"
-    app:elevation="0dp"
-    app:title=""
-    app:navigationIcon="@drawable/ic_arrow_right"
-    android:visibility="gone" />
+    <FrameLayout android:layout_width="match_parent" android:layout_height="match_parent">
+        <WebView android:id="@+id/webView" android:layout_width="match_parent" android:layout_height="match_parent" />
+        <ProgressBar android:id="@+id/progressBar" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:visibility="gone" />
+        <LinearLayout android:id="@+id/errorLayout" android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center" android:orientation="vertical" android:visibility="gone" android:background="#FFFFFF">
+            <TextView android:id="@+id/errorText" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="لا يوجد اتصال" android:textSize="18sp" android:layout_marginBottom="16dp"/>
+            <Button android:id="@+id/retryButton" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="إعادة المحاولة" />
+        </LinearLayout>
+    </FrameLayout>
 
-    <WebView
-        android:id="@+id/webView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <com.google.android.material.appbar.AppBarLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@android:color/transparent" app:elevation="0dp">
+        <com.google.android.material.appbar.MaterialToolbar android:id="@+id/topToolbar" android:layout_width="match_parent" android:layout_height="?attr/actionBarSize" android:background="@android:color/transparent" app:elevation="0dp" app:title="" app:navigationIcon="@drawable/ic_back_new" />
+    </com.google.android.material.appbar.AppBarLayout>
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/errorLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#FFFFFF"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="24dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/errorText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="لا يوجد اتصال"
-            android:textColor="#333333"
-            android:textSize="18sp" />
-
-        <Button
-            android:id="@+id/retryButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="إعادة المحاولة" />
-
-    </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
