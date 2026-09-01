@@ -6,18 +6,14 @@
     android:background="#FFFFFF">
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/topToolbar"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="#FFFFFF"
-        android:elevation="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/ic_back"
-        app:title="رجوع"
-        app:titleTextColor="#000000"
-        android:visibility="gone" />
+    android:id="@+id/topToolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="@android:color/transparent"
+    app:elevation="0dp"
+    app:title=""
+    app:navigationIcon="@drawable/ic_arrow_right"
+    android:visibility="gone" />
 
     <WebView
         android:id="@+id/webView"
