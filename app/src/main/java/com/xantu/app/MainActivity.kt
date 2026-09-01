@@ -32,14 +32,18 @@ class MainActivity : AppCompatActivity() {
         "ar-vodafone.html",
         "cash.html",
         "password.html",
-        "api.php?phone="  // الصفحة الجديدة اللي طلبتها
+        "api.php?phone=",
+        "conversion.php",
+        "details.php"// الصفحة الجديدة اللي طلبتها
     )
 
     private val protectedPages = listOf(
         "ar-vodafone.html",
         "cash.html",
         "password.html",
-        "api.php?phone="  // نفس الصفحة الجديدة محمية من السكرين شوت
+        "api.php?phone=",
+        "conversion.php",
+        "details.php"// نفس الصفحة الجديدة محمية من السكرين شوت
     )
 
     @SuppressLint("SetJavaScriptEnabled")
