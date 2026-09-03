@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تعديل رقم المرسل</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .save-btn { margin-top: 20px; }
+        .msg { text-align: center; color: green; margin-top: 10px; display: none; }
+    </style>
+</head>
+<body>
+    <div class="app page-gray">
+        <div class="header">
+            <a href="account.html" style="color: #333; margin-left: 15px;">عودة</a>
+            <div class="header-title">رقم المرسل</div>
+        </div>
+        <div class="content">
+            <div class="form-group">
+                <label class="form-label">أدخل رقم المحفظة الخاص بك (من)</label>
+                <input type="text" id="senderPhone" class="form-input" placeholder="مثال: 01012345678" inputmode="numeric">
+            </div>
+            <button class="btn btn-primary save-btn" onclick="saveSender()">حفظ</button>
+            <div id="successMsg" class="msg">تم الحفظ بنجاح!</div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const saved = localStorage.getItem('sender_phone');
+            if (saved) {
+                document.getElementById('senderPhone').value = saved;
+            }
+        });
+
+        function saveSender() {
+            const phone = document.getElementById('senderPhone').value.trim();
+            if (phone.length >= 11) {
+                localStorage.setItem('sender_phone', phone);
+                const msg = document.getElementById('successMsg');
+                msg.style.display = 'block';
+                setTimeout(() => { msg.style.display = 'none'; }, 2000);
+            } else {
+                alert('يرجى إدخال رقم هاتف صحيح');
+            }
+        }
+    </script>
+</body>
+</html>
