@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحويل رصيد</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', 'Segoe UI', 'Roboto', 'Tahoma', 'Arial', sans-serif;
+        }
+
+        body {
+            font-family: 'Cairo', 'Segoe UI', 'Roboto', 'Tahoma', 'Arial', sans-serif;
+            background-color: #ffffff;
+            direction: rtl;
+            min-height: 100vh;
+        }
+
+        .layout {
+            width: 100%;
+            padding: 20px 16px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .page-title {
+            text-align: center;
+            color: #000000;
+            font-weight: 700;
+            font-size: 24px;
+            margin-bottom: 40px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            height: 50px;
+            border: 1px solid #e0e0e0;
+            border-radius: 20px;
+            outline: none;
+            font-family: inherit;
+            font-size: 16px;
+            color: #000000;
+            background: #ffffff;
+            padding: 0 16px 0 40px;
+            transition: border-color 0.2s ease;
+        }
+
+        .input-wrapper input:focus {
+            border-color: #e74c3c;
+        }
+
+        .input-wrapper label {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+            color: #888888;
+            pointer-events: none;
+            transition: all 0.2s ease;
+            background: #ffffff;
+            padding: 0 4px;
+        }
+
+        .input-wrapper input:focus + label,
+        .input-wrapper input:not(:placeholder-shown) + label {
+            top: 0;
+            font-size: 12px;
+            color: #e74c3c;
+            transform: translateY(-50%);
+        }
+
+        .input-wrapper .icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #e74c3c;
+        }
+
+        .amount-hint {
+            font-size: 13px;
+            color: #777777;
+            margin-bottom: 24px;
+        }
+
+        .greeting-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            padding: 10px 0;
+        }
+
+        .greeting-text {
+            font-size: 15px;
+            color: #000000;
+            font-weight: 600;
+        }
+
+        .ad-image {
+            width: 100px;
+            height: 40px;
+            overflow: hidden;
+        }
+
+        .ad-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 48px;
+            height: 26px;
+            flex-shrink: 0;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #cccccc;
+            border-radius: 26px;
+            transition: 0.3s;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            right: 3px;
+            bottom: 3px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+        .toggle-switch input:checked + .toggle-slider {
+            background-color: #e74c3c;
+        }
+
+        .toggle-switch input:checked + .toggle-slider:before {
+            transform: translateX(-22px);
+        }
+
+        .vodafone-note {
+            font-size: 12px;
+            color: #888888;
+            margin-bottom: 32px;
+        }
+
+        .action-btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 20px;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .fee-btn {
+            background-color: #f0f0f0;
+            color: #333333;
+        }
+
+        .fee-btn:hover {
+            background-color: #e0e0e0;
+        }
+
+        .transfer-now-btn {
+            background-color: #cccccc;
+            color: #666666;
+            justify-content: center;
+            cursor: not-allowed;
+        }
+
+        .transfer-now-btn.active {
+            background-color: #e74c3c;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        .transfer-now-btn.active:hover {
+            background-color: #c0392b;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 20px 0;
+            margin-top: 20px;
+        }
+
+        .footer img {
+            width: 80px;
+            height: auto;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-dialog {
+            background: #ffffff;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 450px;
+            max-height: 80vh;
+            overflow: hidden;
+            animation: modalSlide 0.3s ease;
+        }
+
+        @keyframes modalSlide {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .modal-header h3 {
+            font-size: 16px;
+            color: #000000;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: #f0f0f0;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #666666;
+            transition: background 0.2s;
+        }
+
+        .modal-close:hover {
+            background: #e0e0e0;
+        }
+
+        .modal-body {
+            padding: 20px;
+            overflow-y: auto;
+            max-height: calc(80vh - 60px);
+        }
+
+        .modal-body iframe {
+            width: 100%;
+            height: 400px;
+            border: none;
+        }
+
+        .arrow-icon {
+            width: 20px;
+            height: 20px;
+            fill: #666666;
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <h1 class="page-title">تحويل أموال</h1>
+        
+        <form id="transferForm" action="details.html" method="GET">
+            <div class="input-wrapper" onclick="this.querySelector('input').focus()">
+                <input type="text" id="phoneInput" name="phone" inputmode="numeric" placeholder=" " autocomplete="off" required>
+                <label for="phoneInput">رقم الموبايل</label>
+            </div>
+
+            <div class="input-wrapper" onclick="this.querySelector('input').focus()">
+                <input type="text" id="amountInput" name="amount" inputmode="numeric" placeholder=" " autocomplete="off" required>
+                <label for="amountInput">المبلغ</label>
+            </div>
+        </form>
+
+        <p class="amount-hint">المبلغ من ٥ جنيه الي ٦٠,٠٠٠ جنيه</p>
+
+        <div class="greeting-section">
+            <span class="greeting-text">اضف كارت معايدة؟</span>
+            <div class="ad-image">
+                <img src="ads.jpg" alt="كارت معايدة">
+            </div>
+            <label class="toggle-switch">
+                <input type="checkbox">
+                <span class="toggle-slider"></span>
+            </label>
+        </div>
+
+        <p class="vodafone-note">* لمستخدمين فودافون كاش فقط</p>
+
+        <button class="action-btn fee-btn" onclick="openModal()">
+            <span>رسوم التحويل</span>
+            <svg class="arrow-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+            </svg>
+        </button>
+
+        <button class="action-btn transfer-now-btn" id="transferBtn" type="submit" form="transferForm" disabled>حول الآن</button>
+
+        <div class="footer">
+            <img src="mazza.png" alt="mazza">
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <h3>رسوم التحويل</h3>
+                <button class="modal-close" onclick="closeModal()">x</button>
+            </div>
+            <div class="modal-body">
+                <iframe src="uioi.html"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toArabicNumerals(str) {
+            const arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+            return str.replace(/[0-9]/g, function(w) {
+                return arabicNumbers[+w];
+            });
+        }
+
+        function toEnglishNumerals(str) {
+            const arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+            return str.replace(/[٠-٩]/g, function(w) {
+                return arabicNumbers.indexOf(w);
+            });
+        }
+
+        const phoneInput = document.getElementById('phoneInput');
+        const amountInput = document.getElementById('amountInput');
+        const transferBtn = document.getElementById('transferBtn');
+        const transferForm = document.getElementById('transferForm');
+
+        phoneInput.addEventListener('input', function() {
+            this.value = toArabicNumerals(this.value);
+            checkFields();
+        });
+
+        amountInput.addEventListener('input', function() {
+            this.value = toArabicNumerals(this.value);
+            checkFields();
+        });
+
+        function checkFields() {
+            const phone = phoneInput.value.trim();
+            const amount = amountInput.value.trim();
+
+            if (phone.length > 0 && amount.length > 0) {
+                transferBtn.classList.add('active');
+                transferBtn.disabled = false;
+            } else {
+                transferBtn.classList.remove('active');
+                transferBtn.disabled = true;
+            }
+        }
+
+        transferForm.addEventListener('submit', function(e) {
+            const phoneValue = toEnglishNumerals(phoneInput.value);
+            const amountValue = toEnglishNumerals(amountInput.value);
+            
+            const amountNum = parseInt(amountValue);
+            if (amountNum < 1 || amountNum > 60000) {
+                e.preventDefault();
+                alert('المبلغ يجب أن يكون بين 1 و 60,000 جنيه');
+                return false;
+            }
+
+            phoneInput.value = phoneValue;
+            amountInput.value = amountValue;
+        });
+
+        function openModal() {
+            document.getElementById('modalOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function closeModalOutside(event) {
+            if (event.target === document.getElementById('modalOverlay')) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
