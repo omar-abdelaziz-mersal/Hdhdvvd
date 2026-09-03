@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بيانات المستلمين</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .add-btn { margin-top: 10px; margin-bottom: 20px; }
+        .rec-item { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #eee; }
+        .delete-btn { color: red; cursor: pointer; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="app page-gray">
+        <div class="header">
+            <a href="account.html" style="color: #333; margin-left: 15px;">عودة</a>
+            <div class="header-title">المستلمين المحفوظين</div>
+        </div>
+        <div class="content">
+            <div class="form-group">
+                <input type="text" id="recName" class="form-input" placeholder="اسم المستلم" style="margin-bottom: 10px;">
+                <input type="text" id="recPhone" class="form-input" placeholder="رقم المحفظة" inputmode="numeric">
+            </div>
+            <button class="btn btn-primary add-btn" onclick="addRecipient()">إضافة مستلم</button>
+            
+            <div id="recipientsList" class="list"></div>
+        </div>
+    </div>
+    <script>
+        function loadRecipients() {
+            const list = document.getElementById('recipientsList');
+            list.innerHTML = '';
+            const data = localStorage.getItem('recipients_data');
+            let recs = [];
+            if (data) {
+                try { recs = JSON.parse(data); } catch(e) {}
+            }
+            
+            recs.forEach((rec, index) => {
+                const div = document.createElement('div');
+                div.className = 'rec-item';
+                div.innerHTML = `
+                    <span>${rec.name} - ${rec.phone}</span>
+                    <span class="delete-btn" onclick="deleteRecipient(${index})">حذف</span>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        function addRecipient() {
+            const name = document.getElementById('recName').value.trim();
+            const phone = document.getElementById('recPhone').value.trim();
+            
+            if (name && phone.length >= 11) {
+                let recs = [];
+                const data = localStorage.getItem('recipients_data');
+                if (data) {
+                    try { recs = JSON.parse(data); } catch(e) {}
+                }
+                recs.push({ name: name, phone: phone });
+                localStorage.setItem('recipients_data', JSON.stringify(recs));
+                document.getElementById('recName').value = '';
+                document.getElementById('recPhone').value = '';
+                loadRecipients();
+            } else {
+                alert('يرجى إدخال الاسم والرقم بشكل صحيح');
+            }
+        }
+
+        function deleteRecipient(index) {
+            let recs = [];
+            const data = localStorage.getItem('recipients_data');
+            if (data) {
+                try { recs = JSON.parse(data); } catch(e) {}
+            }
+            recs.splice(index, 1);
+            localStorage.setItem('recipients_data', JSON.stringify(recs));
+            loadRecipients();
+        }
+
+        document.addEventListener('DOMContentLoaded', loadRecipients);
+    </script>
+</body>
+</html>
