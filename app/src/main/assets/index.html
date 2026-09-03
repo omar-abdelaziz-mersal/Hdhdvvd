@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المحفظة - ڤودافون كاش</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            /* استخدام خطوط النظام المدمجة في أندرويد لضمان العمل Offline 100% بدون ملفات خارجية */
+            font-family: 'Cairo', 'Segoe UI', 'Roboto', 'Tahoma', 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #e9ecef;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 480px;
+            background-color: #f8f9fa;
+            min-height: 100vh;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .top-section {
+            background: linear-gradient(180deg, #5A0000 0%, #300000 100%);
+            padding: 20px 20px 30px 20px;
+            border-radius: 0;
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .brand-title {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .account-link {
+            color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.15);
+            width: 42px;
+            height: 42px;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: 0.3s;
+            z-index: 2;
+        }
+
+        .account-link:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .greeting {
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 25px;
+        }
+
+        .services-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 20px 10px;
+            border-radius: 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .service-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #ffffff;
+            width: 23%;
+            text-align: center;
+        }
+
+        .icon-box {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        .service-title {
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .bottom-section {
+            padding: 25px 20px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .offers-scroll {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding-bottom: 15px;
+            scrollbar-width: none; 
+        }
+        
+        .offers-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .offer-card {
+            flex: 0 0 85%;
+            background-color: #ffffff;
+            border-radius: 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .offer-card img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <div class="top-section">
+            <div class="top-bar">
+                <a href="account.html" class="account-link" title="الحساب">
+                    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2m8-10a4 4 0 100-8 4 4 0 000 8z"/></svg>
+                </a>
+                <div class="brand-title">ڤودافون كاش</div>
+                <div style="width: 42px;"></div>
+            </div>
+
+            <div class="greeting">مرحبا ، عمر</div>
+
+            <div class="services-container">
+                <a href="conversion.html" class="service-btn">
+                    <div class="icon-box">
+                        <svg width="24" height="24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7h12m0 0l-4-4m4 4l-4 4m4 6H4m0 0l4 4m-4-4l4-4"/></svg>
+                    </div>
+                    <div class="service-title">تحويل<br>الأموال</div>
+                </a>
+
+                <a href="#" class="service-btn">
+                    <div class="icon-box">
+                        <svg width="24" height="24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8m-4-4h8"/></svg>
+                    </div>
+                    <div class="service-title">إيداع<br>الأموال</div>
+                </a>
+
+                <a href="#" class="service-btn">
+                    <div class="icon-box">
+                        <svg width="24" height="24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2" ry="2"/><path d="M2 10h20"/></svg>
+                    </div>
+                    <div class="service-title">عمليات<br>ATM</div>
+                </a>
+
+                <a href="#" class="service-btn">
+                    <div class="icon-box">
+                        <svg width="24" height="24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
+                    </div>
+                    <div class="service-title">خدمات<br>الاتصال</div>
+                </a>
+            </div>
+        </div>
+
+        <div class="bottom-section">
+            <h3 class="section-title">العروض</h3>
+            <div class="offers-scroll">
+                <div class="offer-card">
+                    <img src="bb-vof.jpg" alt="عرض ڤودافون كاش">
+                </div>
+                <div class="offer-card">
+                    <img src="xvb-vof.jpg" alt="عرض ڤودافون كاش">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+                          </html>
