@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إيصال فودافون كاش</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', 'Segoe UI', 'Roboto', 'Tahoma', 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f4f5f7;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            padding-top: 0;
+        }
+
+        .top-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .top-navbar-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #333333;
+        }
+
+        .receipt-container {
+            width: 100%;
+            max-width: 400px;
+            margin-top: 70px;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 25px;
+            margin-top: 20px;
+        }
+
+        .badge-container {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .success-img {
+            position: absolute;
+            width: 171px;
+            height: 81px;
+            max-width: none;
+            object-fit: fill;
+            display: block;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .success-text {
+            color: #333333;
+            font-size: 15px;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .amount-display {
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .currency {
+            font-size: 26px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .amount {
+            font-size: 65px;
+            font-weight: bold;
+            color: #007c8a;
+            letter-spacing: -2px;
+            line-height: 1;
+        }
+
+        .amount-label {
+            color: #757575;
+            font-size: 14px;
+            margin-top: 8px;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+
+        .user-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .cash-logo-img {
+            width: 50px;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .label {
+            color: #757575;
+            font-size: 15px;
+            line-height: 1.4;
+        }
+
+        .value {
+            color: #222222;
+            font-size: 17px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .value-small {
+            font-size: 15px;
+            color: #444;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .divider {
+            height: 1px;
+            background-color: #f0f0f0;
+            margin: 10px 0;
+        }
+
+        .flex-between {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: 100%;
+            gap: 15px;
+        }
+
+        .flex-between .value {
+            text-align: left;
+            word-break: break-word;
+        }
+
+        .mt-15 {
+            margin-top: 12px;
+        }
+
+        .footer-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+            padding-bottom: 20px;
+        }
+
+        .footer-logo-img {
+            width: 120px;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .buttons-section {
+            display: flex;
+            gap: 15px;
+            padding-bottom: 20px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            border: none;
+            outline: none;
+        }
+
+        .btn-share {
+            background-color: #e60000;
+            color: #ffffff;
+        }
+
+        .share-icon {
+            width: 20px;
+            height: 20px;
+            fill: #ffffff;
+        }
+
+        .btn-done {
+            background-color: #ffffff;
+            color: #222;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+
+<div class="top-navbar">
+    <div class="top-navbar-title">تم بنجاح</div>
+</div>
+
+<div class="receipt-container">
+    <div class="header-section">
+        <div class="badge-container">
+            <img src="success.png" alt="Success" class="success-img">
+        </div>
+        <div class="success-text">لقد تم الدفع بنجاح!</div>
+        <div class="amount-display">
+            <span class="amount">٠</span>
+            <span class="currency">جنيه</span>
+        </div>
+        <div class="amount-label">إجمالي المبلغ</div>
+    </div>
+
+    <div class="card">
+        <div class="user-row">
+            <img src="cash.png" alt="Cash Logo" class="cash-logo-img">
+            <div class="user-info">
+                <span class="label">من</span>
+                <span class="value">٠</span>
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="user-row">
+            <img src="cash.png" alt="Cash Logo" class="cash-logo-img">
+            <div class="user-info">
+                <span class="label">إلي</span>
+                <span class="value">٠</span>
+                <span class="value-small"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="flex-between">
+            <span class="label">الرسوم</span>
+            <span class="value">٠ جنيه</span>
+        </div>
+        <div class="flex-between mt-15">
+            <span class="label">الإجمالي</span>
+            <span class="value">٠ جنيه</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="flex-between">
+            <span class="label">رقم العملية</span>
+            <span class="value">٠</span>
+        </div>
+        <div class="flex-between mt-15">
+            <span class="label">تاريخ العملية</span>
+            <span class="value">٠</span>
+        </div>
+    </div>
+
+    <div class="footer-section">
+        <img src="vodafone1.png" alt="Vodafone" class="footer-logo-img">
+    </div>
+
+    <div class="buttons-section">
+        <button class="btn btn-share">
+            <svg class="share-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/>
+            </svg>
+            شارك
+        </button>
+        <button class="btn btn-done">تم</button>
+    </div>
+</div>
+
+<script src="js/html2canvas.min.js"></script>
+<script>
+    function toArabicNumerals(str) {
+        const arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+        return String(str).replace(/[0-9]/g, function(w) {
+            return arabicNumbers[+w];
+        });
+    }
+
+    function getArabicDate() {
+        const months = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
+        const now = new Date();
+        let hours = now.getHours();
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const ampm = hours >= 12 ? 'م' : 'ص';
+        hours = hours % 12;
+        hours = hours ? hours : 12;
+        const strHours = String(hours).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const month = months[now.getMonth()];
+        const year = now.getFullYear();
+        return `${toArabicNumerals(strHours)}:${toArabicNumerals(minutes)} ${ampm}، ${toArabicNumerals(day)} ${month} ${toArabicNumerals(year)}`;
+    }
+
+    function generateTransactionId() {
+        const prefixes = ['0173', '0163', '0166', '0158', '01610'];
+        const selected = prefixes[Math.floor(Math.random() * prefixes.length)];
+        const remaining = 12 - selected.length;
+        let id = selected;
+        for (let i = 0; i < remaining; i++) {
+            id += Math.floor(Math.random() * 10);
+        }
+        return id;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const params = new URLSearchParams(window.location.search);
+        const phone = params.get('phone') || '01000000000';
+        const amount = parseFloat(params.get('amount')) || 0;
+
+        const senderData = localStorage.getItem('sender_phone');
+        const senderPhone = senderData ? senderData : '01000000000';
+
+        let recipientName = '';
+        const recipientsData = localStorage.getItem('recipients_data');
+        if (recipientsData) {
+            try {
+                const recList = JSON.parse(recipientsData);
+                if (Array.isArray(recList)) {
+                    const found = recList.find(rec => rec.phone === phone);
+                    if (found) recipientName = found.name;
+                }
+            } catch (e) {}
+        }
+
+        let fee = 1;
+        const prefix = phone.substring(0, 3);
+        if (prefix === '011' || prefix === '012' || prefix === '015') {
+            fee = amount * 0.005;
+            if (fee < 1) fee = 1;
+            if (fee > 15) fee = 15;
+        }
+        const total = amount + fee;
+        const txId = generateTransactionId();
+        const arabicDate = getArabicDate();
+
+        document.querySelector('.amount').textContent = toArabicNumerals(amount);
+        document.querySelectorAll('.user-row')[0].querySelector('.value').textContent = toArabicNumerals(senderPhone);
+        document.querySelectorAll('.user-row')[1].querySelector('.value').textContent = toArabicNumerals(phone);
+        
+        const recipientNameEl = document.querySelectorAll('.user-row')[1].querySelector('.value-small');
+        if (recipientName) {
+            recipientNameEl.textContent = recipientName;
+        } else {
+            recipientNameEl.textContent = '';
+        }
+
+        const labels = document.querySelectorAll('.label');
+        labels.forEach(label => {
+            const text = label.textContent.trim();
+            if (text === 'الرسوم') {
+                label.nextElementSibling.textContent = toArabicNumerals(fee) + ' جنيه';
+            } else if (text === 'الإجمالي') {
+                label.nextElementSibling.textContent = toArabicNumerals(total) + ' جنيه';
+            } else if (text === 'رقم العملية') {
+                label.nextElementSibling.textContent = toArabicNumerals(txId);
+            } else if (text === 'تاريخ العملية') {
+                label.nextElementSibling.textContent = arabicDate;
+            }
+        });
+
+        const audio = document.createElement('audio');
+        audio.id = 'successSoundFinal';
+        audio.src = 'sound-consvi.mp3';
+        audio.preload = 'auto';
+        document.body.appendChild(audio);
+
+        function playVodafoneSound() {
+            const snd = document.getElementById("successSoundFinal");
+            if (snd) {
+                snd.load();
+                snd.currentTime = 0;
+                const playPromise = snd.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(function(e) { });
+                }
+            }
+        }
+        playVodafoneSound();
+        window.addEventListener("pageshow", function(event) {
+            playVodafoneSound();
+        });
+
+        const shareBtn = document.querySelector('.btn-share');
+        const doneBtn = document.querySelector('.btn-done');
+        const buttonsSection = document.querySelector('.buttons-section');
+        const receiptContainer = document.querySelector('.receipt-container');
+
+        shareBtn.addEventListener('click', async () => {
+            buttonsSection.style.display = 'none';
+            try {
+                const canvas = await html2canvas(receiptContainer, {
+                    scale: 3,
+                    backgroundColor: '#f4f5f7',
+                    useCORS: true
+                });
+                buttonsSection.style.display = 'flex';
+                canvas.toBlob(async (blob) => {
+                    const downloadLink = document.createElement('a');
+                    const fileName = 'VodafoneCash_Receipt_' + new Date().getTime() + '.png';
+                    downloadLink.download = fileName;
+                    downloadLink.href = URL.createObjectURL(blob);
+                    downloadLink.click();
+                    URL.revokeObjectURL(downloadLink.href);
+
+                    const file = new File([blob], fileName, { type: 'image/png' });
+                    if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+                        try {
+                            await navigator.share({
+                                files: [file],
+                                title: 'إيصال فودافون كاش',
+                                text: 'تفاصيل الإيصال'
+                            });
+                        } catch (err) {
+                            console.log('تم إلغاء المشاركة أو حدث خطأ', err);
+                        }
+                    }
+                }, 'image/png');
+            } catch (error) {
+                console.error('حدث خطأ أثناء إنشاء الصورة:', error);
+                buttonsSection.style.display = 'flex';
+                alert('حدث خطأ أثناء معالجة الصورة.');
+            }
+        });
+
+        doneBtn.addEventListener('click', () => {
+            window.close();
+            setTimeout(() => {
+                window.location.href = "index.html"; 
+            }, 300);
+        });
+    });
+</script>
+</body>
+</html>
