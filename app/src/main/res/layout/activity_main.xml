@@ -8,7 +8,7 @@
         <WebView android:id="@+id/webView" android:layout_width="match_parent" android:layout_height="match_parent" />
         <ProgressBar android:id="@+id/progressBar" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:visibility="gone" />
         <LinearLayout android:id="@+id/errorLayout" android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center" android:orientation="vertical" android:visibility="gone" android:background="#FFFFFF">
-            <TextView android:id="@+id/errorText" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="لا يوجد اتصال" android:textSize="18sp" android:layout_marginBottom="16dp"/>
+            <TextView android:id="@+id/errorText" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="الملف غير موجود" android:textSize="18sp" android:layout_marginBottom="16dp"/>
             <Button android:id="@+id/retryButton" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="إعادة المحاولة" />
         </LinearLayout>
     </FrameLayout>
