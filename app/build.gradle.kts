@@ -4,15 +4,15 @@ plugins {
 }
 
 android {
-    namespace = "com.xantu.app"
+    namespace = "com.vodafone.app"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.xantu.app"
+        applicationId = "com.vodafone.app"
         minSdk = 21
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "4.9.2026"
     }
 
     buildTypes {
